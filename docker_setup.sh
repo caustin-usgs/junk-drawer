@@ -26,6 +26,15 @@ for ip in $ip1 $ip2
     fi
 done
 
+docker_settings='/etc/default/docker'
+if [[ ! -z `grep ^D $docker_settings` ]]
+then
+  echo "all lines need to be commented out in ${docker_settings}"
+  echo "commenting them out now..."
+  sed -i "s/^D/#D/g" $docker_settings
+  echo " done "
+fi
+
 if [[ $restart == True ]]
   then
     echo "restart docker:  service docker restart ..."
